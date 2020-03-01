@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="first-minus-btn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="first-input" type="text" class="form-control text-center" value="1">
+                           <button id="first-plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="first-total">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="second-minus-btn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="second-input" type="text" class="form-control text-center" value="1">
+                           <button id="second-plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="second-total">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="sub-total-price">1,278</span></h5>
+                        <h5>$ <span id="tax">0</span></h5>
+                        <h5>$ <span id="total-price">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+<script>
+
+
+   //First product plus button action listener
+      const plusBtn = document.getElementById("first-plus-btn");
+      plusBtn.addEventListener("click", function(){
+           const product = inputCounter("first-input");
+
+           const eachPrice = 1219; 
+           const TotalId = "first-total";          
+            //Increase one by one
+            IncreaseItem("first-input",product,1,eachPrice,TotalId);
+
+      })
+
+      //First product minus button action listener
+      const minusBtn = document.getElementById("first-minus-btn");
+      minusBtn.addEventListener("click",function(){
+         const product2 = inputCounter("first-input");
+         const eachPrice = 1219;
+         const TotalId = "first-total"; 
+         //Decrease one by one
+         if(product2!=0){            
+            IncreaseItem("first-input",product2,-1, eachPrice,TotalId);
+         }
+
+      })
+
+
+      //Second product plus button action listener
+      const secondPlusBtn = document.getElementById("second-plus-btn");
+      secondPlusBtn.addEventListener("click",function(){
+         const product = inputCounter("second-input");
+
+         const eachPrice = 59; 
+         const TotalId = "second-total";          
+         //Increase one by one
+         IncreaseItem("second-input",product,1,eachPrice,TotalId);
+
+      })
+
+
+      //Second product minus button action listener
+      const secondMinusBtn = document.getElementById("second-minus-btn");
+      secondMinusBtn.addEventListener("click",function(){
+         const product2 = inputCounter("second-input");
+         const eachPrice = 59;
+         const TotalId = "second-total"; 
+         //Decrease one by one
+         if(product2!=0){            
+            IncreaseItem("second-input",product2,-1, eachPrice,TotalId);
+         }
+      })
+
+      function inputCounter(productId){
+         const ItemNo = document.getElementById(productId).value;
+         const ItemNoAll = parseFloat(ItemNo);
+         return ItemNoAll;
+      }
+
+      //Increase one by one funtion
+      function IncreaseItem(ItemId,ProductCount, ValuePlus,Price,TotalId){
+           const Item = document.getElementById(ItemId).value = ProductCount + (1*ValuePlus);
+
+           document.getElementById(TotalId).innerText = Price * Item;
+
+         //Get price by first product
+           const fTotal = document.getElementById("first-total").innerText;
+           const firstTotal = parseFloat(fTotal);
+         
+         //Get price by second product
+           const sTotal = document.getElementById("second-total").innerText;
+           const secondTotal = parseFloat(sTotal);
+
+           //Set price in subTotal
+           const Total = document.getElementById("sub-total-price").innerText = firstTotal + secondTotal;
+
+           //Set price in Total
+
+           document.getElementById("total-price").innerText = Total;
+      }
+
+      //First Input Kewpress action listener
+      const keyPress = document.getElementById("first-input");
+      keyPress.addEventListener("keyup",function(){
+         const ItemNo = document.getElementById("first-input").value;
+         const Item = parseFloat(ItemNo);
+         document.getElementById("first-total").innerText = 1219 * Item;
+
+         //Get price by first product
+         const fTotal = document.getElementById("first-total").innerText;
+           const firstTotal = parseFloat(fTotal);
+         
+         //Get price by second product
+           const sTotal = document.getElementById("second-total").innerText;
+           const secondTotal = parseFloat(sTotal);
+
+
+         //Set price in subTotal
+         const Total = document.getElementById("sub-total-price").innerText = firstTotal + secondTotal;
+
+         //Set price in Total
+         document.getElementById("total-price").innerText = Total;
+      })
+
+      //Second Input Kewpress action listener
+      const secondKeyPress = document.getElementById("second-input");
+      secondKeyPress.addEventListener("keyup",function(){
+         const ItemNo = document.getElementById("second-input").value;
+         const Item = parseFloat(ItemNo);
+         document.getElementById("second-total").innerText = 59 * Item;
+
+         //Get price by first product
+         const fTotal = document.getElementById("first-total").innerText;
+           const firstTotal = parseFloat(fTotal);
+         
+         //Get price by second product
+           const sTotal = document.getElementById("second-total").innerText;
+           const secondTotal = parseFloat(sTotal);
+
+
+         //Set price in subTotal
+         const Total = document.getElementById("sub-total-price").innerText = firstTotal + secondTotal;
+
+         //Set price in Total
+         document.getElementById("total-price").innerText = Total;
+      })
+
+      
+
+
+</script>
+   
+</body>
+
+</html>
